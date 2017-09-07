@@ -2,7 +2,7 @@ import * as React from "react"
 import {Header} from "pages/Header"
 import {AppViewer} from "pages/AppViewer"
 import {Footer} from "pages/Footer"
-import {Landing} from "pages/Landing"
+import {Landing} from "landing/Landing"
 
 export class App extends React.Component<{}, {}>
 {
