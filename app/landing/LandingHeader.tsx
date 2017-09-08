@@ -6,7 +6,9 @@ export class LandingHeader extends React.Component<{}, {}>
     render() {
         return (
             <div className="header">
-                <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 logo">MyMusicTown</div>
+                <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 logo">
+               <Link to='/'> MyMusicTown</Link>
+                </div>
                 <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7"></div>
                
                     <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">

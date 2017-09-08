@@ -8,8 +8,8 @@
   position: absolute; top: 0; bottom: 0; left: 0; right: 0;
 }
 
+
 .wrapper{
-  top:40%;
   position: absolute;
   width:100%;
   text-align: center;
@@ -23,6 +23,7 @@
   height: 50px;
 }
 .middle-text-landing{
+  margin-top:16%;
   color:white;
   text-shadow: 2px 2px black;
   font-size: 24pt;
@@ -33,7 +34,7 @@
 }
 
 .button-signup{
-    font-family:'Roboto', sans-serif;
+  font-family:'Roboto', sans-serif;
   background: white;
   color: black;
   padding-left:18px;
@@ -56,6 +57,7 @@
     border-radius: 0px;
 }
 
+
 a:hover, a:active{
   text-decoration: none;
   color:#303030;
@@ -77,11 +79,84 @@ a:hover, a:active{
    color:lightgray;
  }
 
+ .button-purple{
+    font-family:'Roboto', sans-serif;
+    background: #715B64;
+    color: white;
+    padding-left:14px;
+    padding-right:14px;
+    padding-top:9px;
+    padding-bottom:9px;
+    display: inline-block;
+    font-size: 13pt;
+ }
+
+ .button-purple:hover, .button-login:active{
+   color: white;
+   text-decoration: none;
+   background: #5D4B52;
+ }
+
 .links{
   float: right;
 }
-.logo{
+.logo, .logo a, .logo a:hover, .logo a:active{
   font-family: 'Pacifico', cursive;
   font-size: 15pt;
+  color:white;
+  text-decoration: none;
   margin-top: -5px;
+}
+
+.login-container{
+  margin-top:10%;
+  font-family:'Roboto', sans-serif;
+  font-size: 13pt;
+  padding: 30px;
+  text-align: left;
+  background-color: white;
+}
+
+.signup-container{
+  margin-top:1%;
+  font-family:'Roboto', sans-serif;
+  font-size: 13pt;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 8px;
+  padding-top: 28px;
+  text-align: left;
+  background-color: white;
+}
+
+.input{
+  border-radius: 0px;
+  margin-top:6px;
+}
+
+.spacing{
+  margin:6px;
+}
+
+.spacing-big{
+  margin:20px;
+  margin-bottom: 40px;
+}
+
+.small-text{
+  font-size: 11pt;
+}
+
+.link a{
+  color: #715B64;
+}
+
+.form-control:focus {
+  border-color: #715B64;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(113, 91, 100, 0.6);
+}
+
+.icon-bg{
+  padding:5px;
+  background-color: #F1F0F0;
 }
