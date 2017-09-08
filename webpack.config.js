@@ -82,6 +82,7 @@ module.exports = {
         port: 8080,
         inline: true,
         overlay: true,
+        historyApiFallback: true,
     },
     output: {
         filename: '[name].bundle.js',
