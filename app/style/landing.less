@@ -5,7 +5,8 @@
   background-attachment: fixed;
   background-size: cover;
   background-color: #464646;
-  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+  overflow-y: auto;
 }
 
 
@@ -44,7 +45,7 @@
   font-size: 16pt;
   border-radius: 0px;
 }
-.button-signup-small{
+.button-signup-small, .button-signup-small:visited , .button-signup-small a:visited{
     top:40px;
     font-family:'Roboto', sans-serif;
     background: white;
@@ -55,6 +56,7 @@
     padding-bottom:9px;
     font-size: 11pt;
     border-radius: 0px;
+    text-decoration: none;
 }
 
 
@@ -62,8 +64,12 @@ a:hover, a:active{
   text-decoration: none;
   color:#303030;
 }
+
+a:visited, a:link{
+  text-decoration: none;
+}
  
- .link-login{
+ .link-login, .link-login:visited{
     top:40px;
     font-family:'Roboto', sans-serif;
     color: white;
@@ -73,13 +79,16 @@ a:hover, a:active{
     padding-bottom:9px;
     font-size: 11pt;
     border-radius: 0px;
+    text-decoration: none;
  }
 
- .link-login:hover{
+ .link-login:active, .link-login:hover{
    color:lightgray;
+   text-decoration: none;
  }
 
- .button-purple{
+
+ .button-purple, .button-purple:visited{
     font-family:'Roboto', sans-serif;
     background: #715B64;
     color: white;
@@ -88,6 +97,7 @@ a:hover, a:active{
     padding-top:9px;
     padding-bottom:9px;
     display: inline-block;
+    text-decoration: none;
     font-size: 13pt;
  }
 
@@ -118,7 +128,8 @@ a:hover, a:active{
 }
 
 .signup-container{
-  margin-top:1%;
+  margin-top:2%;
+  margin-bottom:2%;
   font-family:'Roboto', sans-serif;
   font-size: 13pt;
   padding-left: 50px;
@@ -135,7 +146,7 @@ a:hover, a:active{
 }
 
 .spacing{
-  margin:6px;
+  margin:8px;
 }
 
 .spacing-big{

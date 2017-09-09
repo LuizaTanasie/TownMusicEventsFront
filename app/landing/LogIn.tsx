@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
 
-export class LogIn extends React.Component<{}, {}>
+export class LogIn extends React.Component<{}, {email: string, password: string}>
 {
 
     handleSubmit(event: any) {
@@ -9,8 +9,8 @@ export class LogIn extends React.Component<{}, {}>
         console.log("inainte de url change");
     }
 
-    handleLogInUsername(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ username: event.currentTarget.value });
+    handleLogInEmail(event: React.FormEvent<HTMLInputElement>) {
+        this.setState({ email: event.currentTarget.value });
     }
     handleLogInPassword(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ password: event.currentTarget.value });
@@ -24,8 +24,8 @@ export class LogIn extends React.Component<{}, {}>
                 <div className="login-container col col-xs-12 col-sm-4 col-md-4 col-lg-4">
                     <form>
                         <div className="spacing">
-                            Nume utilizator:
-                                <input type="text" name="username" className="form-control input" placeholder='Introdu numele de utilizator' onChange={this.handleLogInUsername} />
+                            E-mail:
+                                <input type="text" name="username" className="form-control input" placeholder='Introdu e-mailul' onChange={this.handleLogInEmail} />
                         </div>
                         <div className="spacing">
                             Parolă:
@@ -38,7 +38,7 @@ export class LogIn extends React.Component<{}, {}>
                         <div className=" col col-xs-12 col-sm-12 col-md-3 col-lg-3"><br/></div>
                         <div className="small-text col col-xs-12 col-sm-12 col-md-5 col-lg-5">
                             Nu ai deja cont?
-                            <div className="link"><Link to='/register' >Înregistrează-te</Link></div>
+                            <div className="link"><Link to='/signup' >Înregistrează-te</Link></div>
                         </div>
                         <br/><br/>
                     </form>
