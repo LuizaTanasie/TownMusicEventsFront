@@ -1,9 +1,18 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
+import Select from "react-select"
+import 'react-select/dist/react-select.css';
 
-
-export class SignUpArtist extends React.Component<{}, { email: string, name: string, password: string, passwordAgain: string }>
+export class SignUpArtist extends React.Component<{}, { selectedGenres: any, genres: Array<any>, email: string, name: string, password: string, passwordAgain: string }>
 {
+
+    constructor() {
+        super();
+        this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
+        //   this.headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9' });
+        this.state = { selectedGenres: [], genres: [], email: '', name: "", password: '', passwordAgain: '' };
+    }
+
     handleSubmit(event: any) {
         event.preventDefault();
         console.log("inainte de url change");
@@ -22,19 +31,31 @@ export class SignUpArtist extends React.Component<{}, { email: string, name: str
         this.setState({ passwordAgain: event.currentTarget.value });
     }
 
+    componentDidMount() {
+        var cats: any;
+        cats = '';
+        return fetch('http://localhost:17165/api/genre')
+            .then((response) => response.json())
+            .then(function (data) {
+                cats = data;
+            })
+            .then(() => {
 
+                this.setState({ genres: cats })
+                console.log(cats);
+            })
+            .catch(function (error) {
+                console.log('request failedddd', error)
+            })
+    }
 
-logChange(val : any) {
-  console.log("Selected: " + JSON.stringify(val));
-}
-
-
+    changeSelectedGenres(val: any) {
+        console.log("Selected: " + JSON.stringify(val));
+        this.setState({ selectedGenres: val });
+    }
 
     render() {
-        var options = [
-  { value: 'one', label: 'One' },
-  { value: 'two', label: 'Two' }
-]
+
         return (
             <div>
                 <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4"></div>
@@ -59,7 +80,19 @@ logChange(val : any) {
                         </div>
                         <div className="spacing">
                             Genuri muzicale:
-
+                            <Select
+                                name="form-field-genre"
+                                options={this.state.genres}
+                                multi={true}
+                                joinValues
+                                matchPos="start"
+                                ignoreCase={true}
+                                openOnFocus={true}
+                                placeholder="Selecteaza genuri"
+                                noResultsText="Nu exista rezultate"
+                                value={this.state.selectedGenres}
+                                onChange={this.changeSelectedGenres}
+                            />
                         </div>
                         <br />
                         <Link to="/" className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</Link>
