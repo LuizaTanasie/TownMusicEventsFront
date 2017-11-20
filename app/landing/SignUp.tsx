@@ -9,10 +9,12 @@ export class SignUp extends React.Component<{}, {}>
     render() {
         return (
             <div>
+                <div className="bg">
+                </div>
                 <div className="col col-xs-0 col-sm-2 col-md-2 col-lg-2"></div>
                 <div className="signup-container col col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     <div className="row spacing-big">
-                    Alege rolul tău în cadrul comunității:
+                        Alege rolul tău în cadrul comunității:
                     </div>
                     <div className="row spacing-big">
                         <img className="col col-xs-2 col-sm-2 col-md-2 col-lg-2 img-responsive icon-bg" src="/images/fan.png" />
@@ -41,10 +43,10 @@ export class SignUp extends React.Component<{}, {}>
                             <Link to='/signup-venue' className="button-purple">Înregistrare ca proprietar</Link>
                         </div>
                     </div>
-                <div className="row spacing-big">
-                 Ai deja cont?
+                    <div className="row spacing-big">
+                        Ai deja cont?
                  <span className="link"><Link to='/login' > Autentifică-te</Link></span>
-                 </div>
+                    </div>
                 </div>
                 <div className="col col-xs-0 col-sm-2 col-md-2 col-lg-2"></div>
             </div>

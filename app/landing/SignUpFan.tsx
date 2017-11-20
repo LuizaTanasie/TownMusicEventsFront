@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom";
 
-export class SignUpFan extends React.Component<{}, {email: string, name:string, password: string, passwordAgain: string}>
+export class SignUpFan extends React.Component<{}, { email: string, name: string, password: string, passwordAgain: string }>
 {
     handleSubmit(event: any) {
         event.preventDefault();
@@ -24,9 +24,11 @@ export class SignUpFan extends React.Component<{}, {email: string, name:string, 
     render() {
         return (
             <div>
+                <div className="bg">
+                </div>
                 <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4"></div>
                 <div className="signup-container col col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    <div className="spacing">Înregistrare ca fan:<br/><br/></div>
+                    <div className="spacing">Înregistrare ca fan:<br /><br /></div>
                     <form>
                         <div className="spacing">
                             E-mail:
@@ -46,7 +48,7 @@ export class SignUpFan extends React.Component<{}, {email: string, name:string, 
                         </div>
                         <br />
                         <Link to="/" className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</Link>
-                        <br/><br/>  
+                        <br /><br />
                     </form>
                 </div>
                 <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4"></div>

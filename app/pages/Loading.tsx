@@ -1,11 +1,11 @@
 import * as React from "react"
 
-export class PrivateProfileFan extends React.Component <{},{}>
+export class Loading extends React.Component <{},{}>
 {
     render(){
         return (
             <div>
-            footer
+           Loading...
             </div>
         );
     }

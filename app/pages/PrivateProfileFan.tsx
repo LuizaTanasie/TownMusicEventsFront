@@ -1,14 +1,11 @@
 import * as React from "react"
 
-
-export class Header extends React.Component <{},{}>
+export class PrivateProfileFan extends React.Component <{id : number},{}>
 {
-    
-    
     render(){
         return (
             <div>
-            header
+            Hello fan, {this.props.id}
             </div>
         );
     }

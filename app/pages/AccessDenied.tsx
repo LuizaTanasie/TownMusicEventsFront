@@ -1,11 +1,11 @@
 import * as React from "react"
 
-export class PrivateProfileFan extends React.Component <{},{}>
+export class AccessDenied extends React.Component <{},{}>
 {
     render(){
         return (
             <div>
-            footer
+            You don't have access to this page!
             </div>
         );
     }
