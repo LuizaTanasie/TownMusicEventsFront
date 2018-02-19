@@ -5,7 +5,9 @@
   background-attachment: fixed;
   background-size: cover;
   background-color: #464646;
-  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+  overflow-y: auto;
+  z-index: -99;
 }
 
 
@@ -15,10 +17,11 @@
   text-align: center;
 }
 
-.header{
+.header-landing{
   background: rgba(0,0,0,.25);
   max-width: none!important;
   padding-top:15px;
+  z-index: 99;
   color: white;
   height: 50px;
 }
@@ -44,7 +47,7 @@
   font-size: 16pt;
   border-radius: 0px;
 }
-.button-signup-small{
+.button-signup-small, .button-signup-small:visited , .button-signup-small a:visited{
     top:40px;
     font-family:'Roboto', sans-serif;
     background: white;
@@ -55,6 +58,7 @@
     padding-bottom:9px;
     font-size: 11pt;
     border-radius: 0px;
+    text-decoration: none;
 }
 
 
@@ -62,8 +66,12 @@ a:hover, a:active{
   text-decoration: none;
   color:#303030;
 }
+
+a:visited, a:link{
+  text-decoration: none;
+}
  
- .link-login{
+ .link-login, .link-login:visited{
     top:40px;
     font-family:'Roboto', sans-serif;
     color: white;
@@ -73,13 +81,16 @@ a:hover, a:active{
     padding-bottom:9px;
     font-size: 11pt;
     border-radius: 0px;
+    text-decoration: none;
  }
 
- .link-login:hover{
+ .link-login:active, .link-login:hover{
    color:lightgray;
+   text-decoration: none;
  }
 
- .button-purple{
+
+ .button-purple, .button-purple:visited{
     font-family:'Roboto', sans-serif;
     background: #715B64;
     color: white;
@@ -88,7 +99,9 @@ a:hover, a:active{
     padding-top:9px;
     padding-bottom:9px;
     display: inline-block;
+    text-decoration: none;
     font-size: 13pt;
+    border: none;
  }
 
  .button-purple:hover, .button-login:active{
@@ -105,7 +118,7 @@ a:hover, a:active{
   font-size: 15pt;
   color:white;
   text-decoration: none;
-  margin-top: -5px;
+  display: inline-block;
 }
 
 .login-container{
@@ -118,7 +131,8 @@ a:hover, a:active{
 }
 
 .signup-container{
-  margin-top:1%;
+  margin-top:2%;
+  margin-bottom:2%;
   font-family:'Roboto', sans-serif;
   font-size: 13pt;
   padding-left: 50px;
@@ -135,7 +149,7 @@ a:hover, a:active{
 }
 
 .spacing{
-  margin:6px;
+  margin:8px;
 }
 
 .spacing-big{
@@ -159,4 +173,24 @@ a:hover, a:active{
 .icon-bg{
   padding:5px;
   background-color: #F1F0F0;
+}
+.Select-control {
+  border-radius: 0px!important;
+}
+
+.is-focused:not(.is-open) > .Select-control {
+    border-color:#b3b3b3 !important;
+}
+
+.Select-item{
+  color:dimgray!important;
+  background-color: #fff!important;
+  border-color:#d6d6d6 !important;
+  font-size: 0.9em !important;
+}
+
+.Select-item-icon:hover,
+.Select-item-icon:focus {
+  background-color: #fff!important;
+  color: #D0021B!important;
 }

@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export class PrivateProfileFan extends React.Component <{},{}>
+export class Footer extends React.Component <{},{}>
 {
     render(){
         return (
