@@ -34,7 +34,7 @@ export class SignUpArtist extends React.Component<{}, { selectedGenres: any, gen
     componentDidMount() {
         var cats: any;
         cats = '';
-        return fetch('http://localhost:17165/api/genre')
+        return fetch('http://localhost:6840/api/genre')
             .then((response) => response.json())
             .then(function (data) {
                 cats = data;

@@ -14,6 +14,7 @@ import { PrivateProfileVenue } from "pages/PrivateProfileVenue"
 import { Loading } from "pages/Loading"
 import { withRouter } from 'react-router'
 import { TokenService } from 'services/TokenService';
+import { ArtistPublicProfile } from 'pages/ArtistPublicProfile';
 
 export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any }>
 {
@@ -48,6 +49,7 @@ export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any
                     <Route path='/signup-artist' component={SignUpArtist} />
                     <Route path='/signup-venue' component={SignUpVenue} />
                     <Route path='/login' component={LogIn} />
+                    <Route path='/artist/:id' render={(props) => <ArtistPublicProfile artistId={props.match.params.id} />} />
                     <Route path='/profile' component={(props) =>
                         (this.state.token.role == 0) ?
                             (<PrivateProfileFan id={this.state.token.user_id} />)

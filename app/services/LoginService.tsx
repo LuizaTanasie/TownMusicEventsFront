@@ -1,9 +1,9 @@
 import {LoginObject} from 'objects/LogInObject';
-
+import {API} from 'objects/API';
 
 export class LoginService {
 
-    static API = "http://localhost:17165/api/login/";
+    static API = API.url+"/api/login/";
 
     static tryToLogIn(login : any,lg : LoginObject) {
         var myheader = new Headers({'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9'});

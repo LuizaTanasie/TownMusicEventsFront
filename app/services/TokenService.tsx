@@ -1,9 +1,9 @@
 import { TokenObject } from 'objects/TokenObject';
-
+import {API} from 'objects/API';
 
 export class TokenService {
 
-    static API = "http://localhost:17165/api/token";
+    static API = API.url+"/api/token";
 
     static headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9','token': localStorage.getItem("token") });
     static getTokenData(page: any) {
