@@ -25,7 +25,8 @@ export class Dashboard extends React.Component<{}, { artists: any }>
                 <div className="dashboard-page-container">
 
                     <StackGrid
-                        columnWidth={"33.33%"} gutterWidth={0} gutterHeight={0}>
+                        columnWidth={"33.33%"} gutterWidth={0} gutterHeight={0} 
+                        monitorImagesLoaded={true}>
 
                         {artists}
                     </StackGrid>

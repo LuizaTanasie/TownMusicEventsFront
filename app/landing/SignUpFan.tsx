@@ -1,11 +1,22 @@
 import * as React from "react"
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { PreferenceQuiz } from 'landing/PreferenceQuiz';
 
-export class SignUpFan extends React.Component<{}, { email: string, name: string, password: string, passwordAgain: string }>
+export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email: string, name: string, password: string, passwordAgain: string }>
 {
+
+    constructor() {
+        super();
+        this.state = { isNextStep: false, email: '', name: '', password: '', passwordAgain: '' };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+        this.handleName = this.handleName.bind(this);
+        this.handlePasswordAgain = this.handlePasswordAgain.bind(this);
+    }
     handleSubmit(event: any) {
         event.preventDefault();
-        console.log("inainte de url change");
+        this.setState({ isNextStep: true });
     }
 
     handleEmail(event: React.FormEvent<HTMLInputElement>) {
@@ -22,6 +33,17 @@ export class SignUpFan extends React.Component<{}, { email: string, name: string
     }
 
     render() {
+        if (this.state.isNextStep == true) {
+            return (
+                <div>
+                    <div className="bg" />
+                    <div className="col col-xs-0 col-sm-3 col-md-3 col-lg-3"></div>
+                    <div className="signup-container col col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                        <PreferenceQuiz />
+                    </div>
+                </div>
+            )
+        }
         return (
             <div>
                 <div className="bg">
@@ -47,7 +69,8 @@ export class SignUpFan extends React.Component<{}, { email: string, name: string
                                 <input type="password" name="passwordagain" className="form-control input" onChange={this.handlePasswordAgain} />
                         </div>
                         <br />
-                        <Link to="/" className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</Link>
+
+                        <button className="button-purple spacing" onClick={this.handleSubmit}>Pasul următor</button>
                         <br /><br />
                     </form>
                 </div>

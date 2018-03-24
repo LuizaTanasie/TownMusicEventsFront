@@ -8,7 +8,7 @@ import { SignUpVenue } from "landing/SignUpVenue"
 import { LogIn } from "landing/LogIn"
 import { Dashboard } from "pages/Dashboard"
 import { PrivateProfileFan } from "pages/PrivateProfileFan"
-import { PrivateProfileArtist } from "pages/PrivateProfileArtist"
+import { ArtistPrivateProfile } from "pages/ArtistPrivateProfile"
 import { AccessDenied } from "pages/AccessDenied"
 import { PrivateProfileVenue } from "pages/PrivateProfileVenue"
 import { Loading } from "pages/Loading"
@@ -18,7 +18,6 @@ import { ArtistPublicProfile } from 'pages/ArtistPublicProfile';
 
 export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any }>
 {
-
     constructor() {
         super();
         this.state = { isLoggedIn: undefined, token: { user_id: -1, name: '', role: -1 } }
@@ -54,7 +53,7 @@ export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any
                         (this.state.token.role == 0) ?
                             (<PrivateProfileFan id={this.state.token.user_id} />)
                             : (this.state.token.role == 1) ?
-                                (<PrivateProfileArtist id={this.state.token.user_id} />)
+                                (<ArtistPrivateProfile artistId={this.state.token.user_id} />)
                                 : (this.state.token.role == 2) ?
                                     (<PrivateProfileVenue id={this.state.token.user_id} />)
                                     : (<AccessDenied/>)

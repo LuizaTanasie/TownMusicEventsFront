@@ -1,4 +1,5 @@
 import { API } from 'objects/API';
+import { ArtistProfileObject } from 'objects/ArtistProfileObject';
 
 export class ArtistService {
 
@@ -43,4 +44,29 @@ export class ArtistService {
             })
 
     }
+
+    static updateArtist(profile: any, obj: ArtistProfileObject) {
+        var request = new Request(this.API, {
+            method: "PUT",
+            headers: this.headers,
+            body: JSON.stringify({ ArtistId: obj.id, Name: obj.name, Website: obj.website, Facebook: obj.fb, Twitter: obj.twitter,
+                Instagram: obj.insta,YouTube: obj.yt,Biography: obj.biography, Picture1Url: obj.pic1, 
+             Picture2Url: obj.pic2, Picture4Url: obj.pic4, Picture3Url: obj.pic3, Picture5Url: obj.pic5})
+        });
+        let response = fetch(request).then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                // profile.updateFailed();
+            }
+        })
+            .then(function (data) {
+               // profile.setState({ success: true });
+            })
+            .catch(function (error) {
+                // peofile.updateFailed();
+            })
+    }
+
 }
