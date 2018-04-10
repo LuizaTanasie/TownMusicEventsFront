@@ -4,7 +4,6 @@ import { ArtistListView } from 'components/ArtistListView';
 import { ArtistService } from 'services/ArtistService';
 import { GenreService } from 'services/GenreService';
 import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
 import "style/artist-profile.less"
 
 
@@ -29,13 +28,7 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number }, {
             <div className="page-container">
                 <div className="container-regular">
                     <div className="col col-xs-0 col-sm-6 col-md-6 col-lg-6 col-md-offset-1">
-                        <Slider adaptiveHeight={true}>
-                            <img className="img-responsive" src={this.state.artist.Picture1Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture2Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture3Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture4Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture5Url} />
-                        </Slider>
+                            <img className="img-responsive" src={this.state.artist.PictureUrl} />
                         <div>
                             <button className="button-sunt-fan">
                                 <img className="img-responsive element-sunt-fan" src="/images/imafan.png" />

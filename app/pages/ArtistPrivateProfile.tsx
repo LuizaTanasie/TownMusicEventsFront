@@ -12,15 +12,13 @@ import Slider from 'react-slick';
 export class ArtistPrivateProfile extends React.Component<{ artistId: number }, {
     artist: any, genres: any,
     biography: string, name: string, fb: string, twitter: string, yt: string, insta: string, website: string, pic1: string
-    pic2: string, pic3: string, pic4: string, pic5: string
 }>
 {
     constructor() {
         super();
         this.state = {
             artist: '', genres: [], biography: '',
-            name: '', fb: '', twitter: '', yt: '', insta: '', website: '', pic1: '',
-            pic2: '', pic3: '', pic4: '', pic5: ''
+            name: '', fb: '', twitter: '', yt: '', insta: '', website: '', pic1: ''
         };
         this.handleSave = this.handleSave.bind(this);
         this.handleChangeBio = this.handleChangeBio.bind(this);
@@ -30,10 +28,6 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         this.handleYt = this.handleYt.bind(this);
         this.handleTwitter = this.handleTwitter.bind(this);
         this.handlePic1 = this.handlePic1.bind(this);
-        this.handlePic2 = this.handlePic2.bind(this);
-        this.handlePic3 = this.handlePic3.bind(this);
-        this.handlePic4 = this.handlePic4.bind(this);
-        this.handlePic5 = this.handlePic5.bind(this);
     }
 
     componentDidMount() {
@@ -68,18 +62,6 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
     handlePic1(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ pic1: event.currentTarget.value });
     }
-    handlePic2(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ pic2: event.currentTarget.value });
-    }
-    handlePic3(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ pic3: event.currentTarget.value });
-    }
-    handlePic4(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ pic4: event.currentTarget.value });
-    }
-    handlePic5(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ pic5: event.currentTarget.value });
-    }
 
     handleSave(event: any) {
         event.preventDefault();
@@ -93,10 +75,6 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         artistProfileObject.website = this.state.website;
         artistProfileObject.twitter = this.state.twitter;
         artistProfileObject.pic1 = this.state.pic1;
-        artistProfileObject.pic2 = this.state.pic2;
-        artistProfileObject.pic3 = this.state.pic3;
-        artistProfileObject.pic4 = this.state.pic4;
-        artistProfileObject.pic5 = this.state.pic5;
 
         var loginResult = ArtistService.updateArtist(this, artistProfileObject);
     }
@@ -143,14 +121,6 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
                     <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 spacing-top">
                         <div className="input-entry-text">Url poza 1: </div>
                         <input type="text" name="artist-picture1" className="input-private-profile-long" placeholder={this.state.artist.Picture1Url} onChange={this.handlePic1} /><br />
-                        <div className="input-entry-text">Url poza 2: </div>
-                        <input type="text" name="artist-picture2" className="input-private-profile-long" placeholder={this.state.artist.Picture2Url} onChange={this.handlePic2} /><br />
-                        <div className="input-entry-text">Url poza 3: </div>
-                        <input type="text" name="artist-picture3" className="input-private-profile-long" placeholder={this.state.artist.Picture3Url} onChange={this.handlePic3} /><br />
-                        <div className="input-entry-text">Url poza 4: </div>
-                        <input type="text" name="artist-picture4" className="input-private-profile-long" placeholder={this.state.artist.Picture4Url} onChange={this.handlePic4} /><br />
-                        <div className="input-entry-text">Url poza 5: </div>
-                        <input type="text" name="artist-picture5" className="input-private-profile-long" placeholder={this.state.artist.Picture5Url} onChange={this.handlePic5} /><br />
                     </div>
                     <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container">
                         <div className="input-entry-text-black">Biografie: </div>

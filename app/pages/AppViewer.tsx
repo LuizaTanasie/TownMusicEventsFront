@@ -4,7 +4,6 @@ import { LandingMain } from "landing/LandingMain"
 import { SignUp } from "landing/SignUp"
 import { SignUpFan } from "landing/SignUpFan"
 import { SignUpArtist } from "landing/SignUpArtist"
-import { SignUpVenue } from "landing/SignUpVenue"
 import { LogIn } from "landing/LogIn"
 import { Dashboard } from "pages/Dashboard"
 import { PrivateProfileFan } from "pages/PrivateProfileFan"
@@ -46,7 +45,6 @@ export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any
                     <Route path='/signup' component={SignUp} />
                     <Route path='/signup-fan' component={SignUpFan} />
                     <Route path='/signup-artist' component={SignUpArtist} />
-                    <Route path='/signup-venue' component={SignUpVenue} />
                     <Route path='/login' component={LogIn} />
                     <Route path='/artist/:id' render={(props) => <ArtistPublicProfile artistId={props.match.params.id} />} />
                     <Route path='/profile' component={(props) =>

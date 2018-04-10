@@ -18,7 +18,7 @@ export class Dashboard extends React.Component<{}, { artists: any }>
 
     render() {
         let artists = this.state.artists.map(function (object: any, i: any) {
-            return <ArtistListView imgurl={object.Picture1Url} name={object.Name} artistId={object.ArtistId} />;
+            return <ArtistListView imgurl={object.PictureUrl} name={object.Name} artistId={object.ArtistId} />;
         })
         return (
             <div className="page-container">

@@ -1,10 +1,11 @@
 import * as React from "react"
 import { Link, Redirect } from "react-router-dom";
 import { PreferenceQuiz } from 'landing/PreferenceQuiz';
+import { SignUpService } from 'services/SignUpService';
+import {SignUpUserObject} from 'objects/SignUpUserObject';
 
 export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email: string, name: string, password: string, passwordAgain: string }>
 {
-
     constructor() {
         super();
         this.state = { isNextStep: false, email: '', name: '', password: '', passwordAgain: '' };
@@ -14,8 +15,14 @@ export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email:
         this.handleName = this.handleName.bind(this);
         this.handlePasswordAgain = this.handlePasswordAgain.bind(this);
     }
+
     handleSubmit(event: any) {
         event.preventDefault();
+        var obj = new SignUpUserObject(); 
+        obj.email = this.state.email;
+        obj.name = this.state.name;
+        obj.password = this.state.password;
+        SignUpService.signUpFan(this,obj);
         this.setState({ isNextStep: true });
     }
 
@@ -70,7 +77,7 @@ export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email:
                         </div>
                         <br />
 
-                        <button className="button-purple spacing" onClick={this.handleSubmit}>Pasul următor</button>
+                        <button className="button-purple spacing" onClick={this.handleSubmit}>Inregistrare</button>
                         <br /><br />
                     </form>
                 </div>

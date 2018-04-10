@@ -5,6 +5,8 @@ import { ListView } from 'components/ListView';
 import { ArtistSignUpListView } from 'components/ArtistSignUpListView';
 import { LastFMService } from 'services/LastFMService';
 import 'react-select/dist/react-select.css';
+import { SignUpService } from 'services/SignUpService';
+import { Link } from 'react-router-dom';
 
 export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedGenres: any, topArtistsRomania: any, topRomanianArtists: any }>
 {
@@ -12,17 +14,22 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
         super();
         this.state = { genres: [], selectedGenres: [], topArtistsRomania: [], topRomanianArtists: [] }
         this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
+        this.giveRating = this.giveRating.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-    private ratings : Array<any> = [];
+    private ratings: Array<any> = [];
 
     changeSelectedGenres(val: any) {
         console.log("Selected: " + JSON.stringify(val));
         this.setState({ selectedGenres: val });
     }
 
-    giveRating(val:any,name:string, id:string){
-        console.log(val,name,id);
-        this.ratings.push({val,name,id});
+    giveRating(score: any, name: string, artistId: string) {
+        this.ratings.push({ score, name, artistId });
+    }
+
+    handleSubmit(event: any) {
+        SignUpService.postQuizAnswers(this, this.ratings, this.state.selectedGenres);
     }
 
     componentDidMount() {
@@ -41,8 +48,8 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
                 cu atat sugestiile noastre vor fii mai personalizate.
             <br />
                 <div className="spacing">
-                <div className="subtitle">
-                    1. Alege genurile tale de muzica preferate:<br /><br />
+                    <div className="subtitle">
+                        1. Alege genurile tale de muzica preferate:<br /><br />
                     </div>
                     <Select
                         name="form-field-genre"
@@ -57,34 +64,34 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
                         value={this.state.selectedGenres}
                         onChange={this.changeSelectedGenres}
                     />
-                </div><br/>
+                </div><br />
                 <div className="spacing">
-                <div className="subtitle">
-                    2. Evalueaza urmatorii artisti autohtoni. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
+                    <div className="subtitle">
+                        2. Evalueaza urmatorii artisti autohtoni. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
                     </div>
                     <br /><br />
                     <ListView elements={
                         this.state.topArtistsRomania.slice(0, 10).map((artist: any, i: any) =>
-                            
-                             <ArtistSignUpListView imgurl={artist.image[2]["#text"]} name={artist.name}  id={artist.mbid}
-                            giveRating={this.giveRating} />                        
+
+                            <ArtistSignUpListView imgurl={artist.image[2]["#text"]} name={artist.name} id={artist.mbid}
+                                giveRating={this.giveRating} />
                         )
                     } />
                 </div>
                 <br />
                 <div className="spacing">
-                <div className="subtitle">
-                    3. Evalueaza urmatorii artisti din Romania. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
+                    <div className="subtitle">
+                        3. Evalueaza urmatorii artisti din Romania. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
                 </div><br /><br />
                     <ListView elements={
-                        this.state.topRomanianArtists.slice(0, 10).map( (artist: any, i: any) =>
-                            <ArtistSignUpListView imgurl={artist.image[2]["#text"]} name={artist.name} id={artist.mbid} 
-                            giveRating={this.giveRating} />
-                        
+                        this.state.topRomanianArtists.slice(0, 10).map((artist: any, i: any) =>
+                            <ArtistSignUpListView imgurl={artist.image[2]["#text"]} name={artist.name} id={artist.mbid}
+                                giveRating={this.giveRating} />
+
                         )
                     } />
                     <div className="float-right">
-                    <button className="button-purple">Inregistrare</button>
+                        <Link to="/" className="button-purple" onClick={this.handleSubmit}>Trimite</Link>
                     </div>
                 </div>
             </div>
