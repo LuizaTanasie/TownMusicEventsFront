@@ -7,7 +7,7 @@ export class LandingHeader extends React.Component<{}, {}>
         return (
             <div className="header-landing">
                 <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2 logo">
-               <Link to='/'> MyMusicTown</Link>
+               <Link to='/'> MusicJourney</Link>
                 </div>
                 <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7"></div>
                

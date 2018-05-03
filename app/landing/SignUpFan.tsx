@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link, Redirect } from "react-router-dom";
 import { PreferenceQuiz } from 'landing/PreferenceQuiz';
 import { SignUpService } from 'services/SignUpService';
-import {SignUpUserObject} from 'objects/SignUpUserObject';
+import { SignUpUserObject } from 'objects/SignUpUserObject';
 
 export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email: string, name: string, password: string, passwordAgain: string }>
 {
@@ -16,13 +16,15 @@ export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email:
         this.handlePasswordAgain = this.handlePasswordAgain.bind(this);
     }
 
+    private ratings: Array<any> = [];
+
     handleSubmit(event: any) {
         event.preventDefault();
-        var obj = new SignUpUserObject(); 
+        var obj = new SignUpUserObject();
         obj.email = this.state.email;
         obj.name = this.state.name;
         obj.password = this.state.password;
-        SignUpService.signUpFan(this,obj);
+        SignUpService.signUpFan(this, obj);
         this.setState({ isNextStep: true });
     }
 

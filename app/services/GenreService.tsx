@@ -41,4 +41,23 @@ export class GenreService {
             })
 
     }
+
+    static getGenresForFan(page: any, fanId: number) {
+        var genres: any;
+        genres = '';
+        return fetch(this.API+"?idFan="+fanId, { method: "GET", headers: this.headers })
+            .then((response) => response.json())
+            .then(function (data) {
+                genres = data;
+            })
+            .then(() => {
+                page.setState({ genres: genres })
+                console.log(genres);
+            })
+            .catch(function (error) {
+                console.log('request failed', error)
+
+            })
+
+    }
 }

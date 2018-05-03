@@ -18,18 +18,16 @@ export class HeaderArtist extends React.Component<{}, {}>
             <nav className="header">
                 <div className="container-fluid">
                     <div className="logo navbar-header">
-                        <Link className="navbar-brand" to='/'>MyMusicTown</Link>
+                        <Link className="navbar-brand" to='/'>MusicJourney</Link>
                     </div>
                     <ul className="nav navbar-nav">
                         <li><Link to='/' className=" header-button">Dashboard</Link></li>
-                        <li><Link to='/' className=" header-button">Descopera artisti</Link></li>
-                        <li><Link to='/' className=" header-button">Artisti preferati</Link></li>
-                        <li><Link to='/' className=" header-button">Concerte</Link></li>
+                        <li><Link to='/statistics' className=" header-button">Statistici</Link></li>
                     </ul>
 
                     <ul className="nav navbar-nav navbar-right">
                         <li><Link to='/profile' className="header-link"><div className="glyphicon glyphicon-user"></div>Profil</Link></li>
-                        <li><a onClick={LogOutService.LogOut} className="header-link">
+                        <li><a href="/" onClick={LogOutService.LogOut} className="header-link">
                             <div className="glyphicon glyphicon-log-out"></div> Iesire
                             </a></li>
 

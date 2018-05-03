@@ -6,14 +6,15 @@ import { SignUpFan } from "landing/SignUpFan"
 import { SignUpArtist } from "landing/SignUpArtist"
 import { LogIn } from "landing/LogIn"
 import { Dashboard } from "pages/Dashboard"
-import { PrivateProfileFan } from "pages/PrivateProfileFan"
+import { Statistics } from "pages/Statistics"
+import { FanPrivateProfile } from "pages/FanPrivateProfile"
 import { ArtistPrivateProfile } from "pages/ArtistPrivateProfile"
 import { AccessDenied } from "pages/AccessDenied"
-import { PrivateProfileVenue } from "pages/PrivateProfileVenue"
 import { Loading } from "pages/Loading"
 import { withRouter } from 'react-router'
 import { TokenService } from 'services/TokenService';
 import { ArtistPublicProfile } from 'pages/ArtistPublicProfile';
+import { ArtistPublicProfileNoRating } from 'pages/ArtistPublicProfileNoRating';
 
 export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any }>
 {
@@ -44,17 +45,23 @@ export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any
                     <Route path='/landing' component={LandingMain} />
                     <Route path='/signup' component={SignUp} />
                     <Route path='/signup-fan' component={SignUpFan} />
+                    <Route path='/statistics' component={(props) =>
+                        (this.state.token.role == 1) ?
+                            (<Statistics artistId={this.state.token.user_id} />)
+                            : (<AccessDenied />)} />
                     <Route path='/signup-artist' component={SignUpArtist} />
                     <Route path='/login' component={LogIn} />
-                    <Route path='/artist/:id' render={(props) => <ArtistPublicProfile artistId={props.match.params.id} />} />
+                    <Route path='/artist/:id' render={(props) =>
+                        (this.state.token.role == 0) ?
+                            (<ArtistPublicProfile artistId={props.match.params.id} fanId={this.state.token.user_id} />)
+                            : (<ArtistPublicProfileNoRating artistId={props.match.params.id} />)
+                    } />
                     <Route path='/profile' component={(props) =>
                         (this.state.token.role == 0) ?
-                            (<PrivateProfileFan id={this.state.token.user_id} />)
+                            (<FanPrivateProfile fanId={this.state.token.user_id} />)
                             : (this.state.token.role == 1) ?
                                 (<ArtistPrivateProfile artistId={this.state.token.user_id} />)
-                                : (this.state.token.role == 2) ?
-                                    (<PrivateProfileVenue id={this.state.token.user_id} />)
-                                    : (<AccessDenied/>)
+                                : (<AccessDenied />)
                     } />
                 </Switch>
             </div>

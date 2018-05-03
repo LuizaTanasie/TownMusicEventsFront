@@ -6,19 +6,20 @@ import { GenreService } from 'services/GenreService';
 import { ArtistProfileObject } from 'objects/ArtistProfileObject';
 import { Link } from 'react-router-dom';
 import "style/artist-profile.less"
-import Slider from 'react-slick';
 
 
 export class ArtistPrivateProfile extends React.Component<{ artistId: number }, {
     artist: any, genres: any,
-    biography: string, name: string, fb: string, twitter: string, yt: string, insta: string, website: string, pic1: string
+    biography: string, name: string, fb: string, twitter: string, yt: string, insta: string, website: string,
+    pic1: string, spotify: string, sc: string, oldPass: string, newPass: string
 }>
 {
     constructor() {
         super();
         this.state = {
             artist: '', genres: [], biography: '',
-            name: '', fb: '', twitter: '', yt: '', insta: '', website: '', pic1: ''
+            name: '', fb: '', twitter: '', yt: '', insta: '', website: '', pic1: '', spotify: '', sc: '',
+            oldPass: '', newPass: ''
         };
         this.handleSave = this.handleSave.bind(this);
         this.handleChangeBio = this.handleChangeBio.bind(this);
@@ -28,6 +29,8 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         this.handleYt = this.handleYt.bind(this);
         this.handleTwitter = this.handleTwitter.bind(this);
         this.handlePic1 = this.handlePic1.bind(this);
+        this.handleSpotify = this.handleSpotify.bind(this);
+        this.handleSoundCloud = this.handleSoundCloud.bind(this);
     }
 
     componentDidMount() {
@@ -59,6 +62,13 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
     handleTwitter(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ twitter: event.currentTarget.value });
     }
+
+    handleSpotify(event: React.FormEvent<HTMLInputElement>) {
+        this.setState({ spotify: event.currentTarget.value });
+    }
+    handleSoundCloud(event: React.FormEvent<HTMLInputElement>) {
+        this.setState({ sc: event.currentTarget.value });
+    }
     handlePic1(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ pic1: event.currentTarget.value });
     }
@@ -75,10 +85,22 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         artistProfileObject.website = this.state.website;
         artistProfileObject.twitter = this.state.twitter;
         artistProfileObject.pic1 = this.state.pic1;
+        artistProfileObject.spotify = this.state.spotify;
+        artistProfileObject.sc = this.state.sc;
 
-        var loginResult = ArtistService.updateArtist(this, artistProfileObject);
+        var result = ArtistService.updateArtist(this, artistProfileObject);
+    }
+    private handleOldPass = (ev: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ oldPass: ev.currentTarget.value });
+    }
+    private handleNewPass = (ev: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ newPass: ev.currentTarget.value });
     }
 
+    handleChangePass(event: any) {
+        event.preventDefault();
+        // ProfileService.changePassword(this);
+    }
 
 
     render() {
@@ -87,50 +109,74 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         })
         let imageList = '';
         return (
-            <div className="page-container">
-                <div className="container-regular">
-                    <div className="col col-xs-0 col-sm-6 col-md-6 col-lg-6 col-md-offset-1">
-                        <Slider adaptiveHeight={true}>
-                            <img className="img-responsive" src={this.state.artist.Picture1Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture2Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture3Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture4Url} />
-                            <img className="img-responsive" src={this.state.artist.Picture5Url} />
-                        </Slider>
-                    </div>
-                    <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
-                        <div className="input-entry-text-big">Nume: </div>
-                        <input type="text" name="artist-name" className="input-private-profile-big" placeholder={this.state.artist.Name} onChange={this.handleName} />
-                        <div className="input-entry-text">Website: </div>
-                        <input type="text" name="artist-website" className="input-private-profile" placeholder={this.state.artist.Website} onChange={this.handleWebsite} />
-                        <div className="input-entry-text">Facebook: </div>
-                        <input type="text" name="artist-facebook" className="input-private-profile" placeholder={this.state.artist.Facebook} onChange={this.handleFb} />
-
-                        <div className="input-entry-text">Twitter: </div>
-                        <input type="text" name="artist-twitter" className="input-private-profile" placeholder={this.state.artist.Twitter} onChange={this.handleTwitter} />
-
-                        <div className="input-entry-text">Instagram: </div>
-                        <input type="text" name="artist-instagram" className="input-private-profile" placeholder={this.state.artist.Instagram} onChange={this.handleInsta} />
-
-                        <div className="input-entry-text">Youtube: </div>
-                        <input type="text" name="artist-youtube" className="input-private-profile" placeholder={this.state.artist.Youtube} onChange={this.handleYt} />
-
-                        <button className="link-button">Schimbă parola</button><br />
-                        <button className="link-button">Schimbă genurile muzicale</button>
-                    </div>
-                    <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 spacing-top">
-                        <div className="input-entry-text">Url poza 1: </div>
-                        <input type="text" name="artist-picture1" className="input-private-profile-long" placeholder={this.state.artist.Picture1Url} onChange={this.handlePic1} /><br />
-                    </div>
-                    <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container">
-                        <div className="input-entry-text-black">Biografie: </div>
-                        <textarea value={this.state.artist.Biography} name="descriere" className="form-control textarea " onChange={this.handleChangeBio} rows={9} />
-                    </div>
-                    <div className="col col-sm-1 col-md-1 col-lg-1"></div>
-                    <div className="row">
-                        <div className="col col-sm-2 col-md-2 col-lg-2 col-md-offset-1">
-                            <button className="button-purple" onClick={this.handleSave}>Salvează modificări</button>
+            <div>
+                <div className="page-container">
+                    <div className="container-regular">
+                        <div className="col col-xs-0 col-sm-6 col-md-6 col-lg-6 col-md-offset-1">
+                            <img className="img-responsive" src={this.state.artist.PictureUrl} />
                         </div>
+                        <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
+                            <div className="input-entry-text-big">Nume: </div>
+                            <input type="text" name="artist-name" className="input-private-profile-big" placeholder={this.state.artist.Name} onChange={this.handleName} />
+                            <div className="input-entry-text">Website: </div>
+                            <input type="text" name="artist-website" className="input-private-profile" placeholder={this.state.artist.Website} onChange={this.handleWebsite} />
+                            <div className="input-entry-text">Facebook: </div>
+                            <input type="text" name="artist-facebook" className="input-private-profile" placeholder={this.state.artist.Facebook} onChange={this.handleFb} />
+
+                            <div className="input-entry-text">Twitter: </div>
+                            <input type="text" name="artist-twitter" className="input-private-profile" placeholder={this.state.artist.Twitter} onChange={this.handleTwitter} />
+
+                            <div className="input-entry-text">Instagram: </div>
+                            <input type="text" name="artist-instagram" className="input-private-profile" placeholder={this.state.artist.Instagram} onChange={this.handleInsta} />
+
+                            <div className="input-entry-text">Youtube: </div>
+                            <input type="text" name="artist-youtube" className="input-private-profile" placeholder={this.state.artist.YouTube} onChange={this.handleYt} />
+                            <div className="input-entry-text">Spotify: </div>
+                            <input type="text" name="artist-spotify" className="input-private-profile" placeholder={this.state.artist.Spotify} onChange={this.handleSpotify} />
+                            <div className="input-entry-text">SoundCloud: </div>
+                            <input type="text" name="artist-soundcloud" className="input-private-profile" placeholder={this.state.artist.SoundCloud} onChange={this.handleSoundCloud} />
+
+                            <button className="link-button" data-toggle="modal" data-target="#myModalPassword">Schimbă parola</button><br />
+                            <button className="link-button">Schimbă genurile muzicale</button>
+                        </div>
+                        <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 spacing-top">
+                            <div className="input-entry-text">Url poza: </div>
+                            <input type="text" name="artist-picture1" className="input-private-profile-long" placeholder={this.state.artist.PictureUrl} onChange={this.handlePic1} /><br />
+                        </div>
+                        <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container-private">
+                            <div className="input-entry-text-black">Biografie: </div>
+                            <textarea placeholder={this.state.artist.Biography} name="descriere" className="form-control textarea " onChange={this.handleChangeBio} rows={9} />
+                        </div>
+                        <div className="col col-sm-1 col-md-1 col-lg-1"></div>
+                        <div className="row">
+                            <div className="col col-sm-2 col-md-2 col-lg-2 col-md-offset-1">
+                                <button className="button-purple" onClick={this.handleSave}>Salvează modificări</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myModalPassword" className="modal fade" role="dialog">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                <h4 className="modal-title">Schimbati parola:</h4>
+                            </div>
+                            <div className="modal-body">
+                                <div className="spacing">
+                                    Parolă veche:
+                                <input type="password" name="password" className="form-control input" onChange={this.handleOldPass} />
+                                </div>
+                                <div className="spacing">
+                                    Parolă noua:
+                                <input type="password" name="password" className="form-control input" onChange={this.handleNewPass} />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" onClick={this.handleChangePass}  className="button-purple" data-dismiss="modal">Salvează</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

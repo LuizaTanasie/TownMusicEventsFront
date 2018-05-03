@@ -2,6 +2,8 @@ import * as React from "react"
 import { Link } from "react-router-dom";
 import Select from "react-select"
 import 'react-select/dist/react-select.css';
+import { SignUpUserObject } from 'objects/SignUpUserObject';
+import { SignUpService } from 'services/SignUpService';
 
 export class SignUpArtist extends React.Component<{}, { selectedGenres: any, genres: Array<any>, email: string, name: string, password: string, passwordAgain: string }>
 {
@@ -9,13 +11,22 @@ export class SignUpArtist extends React.Component<{}, { selectedGenres: any, gen
     constructor() {
         super();
         this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
-        //   this.headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'q=0.8;application/json;q=0.9' });
         this.state = { selectedGenres: [], genres: [], email: '', name: "", password: '', passwordAgain: '' };
-    }
+        this.handleSubmit = this.handleSubmit.bind(this);    
+        this.handlePassword = this.handlePassword.bind(this);   
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handleName = this.handleName.bind(this);
+        this.handlePasswordAgain = this.handlePasswordAgain.bind(this);
+}
 
     handleSubmit(event: any) {
         event.preventDefault();
-        console.log("inainte de url change");
+        var obj = new SignUpUserObject();
+        obj.email = this.state.email;
+        obj.name = this.state.name;
+        obj.password = this.state.password;
+        SignUpService.signUpArtist(this, obj,this.state.selectedGenres);
+        window.location.replace("/");
     }
 
     handleEmail(event: React.FormEvent<HTMLInputElement>) {
@@ -97,7 +108,7 @@ export class SignUpArtist extends React.Component<{}, { selectedGenres: any, gen
                             />
                         </div>
                         <br />
-                        <Link to="/" className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</Link>
+                        <button className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</button>
                         <br /><br />
                     </form>
                 </div>

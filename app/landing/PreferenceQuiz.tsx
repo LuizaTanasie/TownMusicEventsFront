@@ -67,7 +67,7 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
                 </div><br />
                 <div className="spacing">
                     <div className="subtitle">
-                        2. Evalueaza urmatorii artisti autohtoni. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
+                        2. Evalueaza urmatorii artisti straini. Daca nu i-ai ascultat niciodata, nu trebuie sa le acorzi o nota.
                     </div>
                     <br /><br />
                     <ListView elements={
