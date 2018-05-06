@@ -49,8 +49,6 @@ export class FanPrivateProfile extends React.Component<{ fanId: number }, {
         // ProfileService.changePassword(this);
     }
 
-
-
     render() {
         let genres = this.state.genres.map(function (object: any, i: any) {
             return <span>{object.value} | </span>

@@ -36,7 +36,6 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
     }
 
     hasClickedALink(event: React.FormEvent<HTMLAnchorElement>) {
-        event.preventDefault();
         this.setState({ hasClicked: true });
     }
 

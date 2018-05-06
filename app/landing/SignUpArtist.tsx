@@ -4,60 +4,63 @@ import Select from "react-select"
 import 'react-select/dist/react-select.css';
 import { SignUpUserObject } from 'objects/SignUpUserObject';
 import { SignUpService } from 'services/SignUpService';
+import { GenreService } from 'services/GenreService';
 
-export class SignUpArtist extends React.Component<{}, { selectedGenres: any, genres: Array<any>, email: string, name: string, password: string, passwordAgain: string }>
+export class SignUpArtist extends React.Component<{}, {
+    selectedGenres: any, genres: Array<any>, email: string,
+    name: string, password: string, passwordAgain: string, error: string;
+}>
 {
+    private pw: string;
+    private checkPw: string;
 
     constructor() {
         super();
         this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
-        this.state = { selectedGenres: [], genres: [], email: '', name: "", password: '', passwordAgain: '' };
-        this.handleSubmit = this.handleSubmit.bind(this);    
-        this.handlePassword = this.handlePassword.bind(this);   
+        this.state = { selectedGenres: [], genres: [], email: '', name: "", password: '', passwordAgain: '', error: '' };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handlePasswordAgain = this.handlePasswordAgain.bind(this);
-}
+    }
 
     handleSubmit(event: any) {
         event.preventDefault();
-        var obj = new SignUpUserObject();
-        obj.email = this.state.email;
-        obj.name = this.state.name;
-        obj.password = this.state.password;
-        SignUpService.signUpArtist(this, obj,this.state.selectedGenres);
-        window.location.replace("/");
+        if (this.pw == this.checkPw) {
+            var obj = new SignUpUserObject();
+            obj.email = this.state.email;
+            obj.name = this.state.name;
+            obj.password = this.state.password;
+            SignUpService.signUpArtist(this, obj, this.state.selectedGenres);
+        }
     }
 
     handleEmail(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ email: event.currentTarget.value });
     }
     handlePassword(event: React.FormEvent<HTMLInputElement>) {
+        this.pw = event.currentTarget.value;
         this.setState({ password: event.currentTarget.value });
     }
     handleName(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ name: event.currentTarget.value });
     }
     handlePasswordAgain(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ passwordAgain: event.currentTarget.value });
+        this.checkPw = event.currentTarget.value;
+        if (this.pw != this.checkPw) {
+            this.setState({ error: "Parolele introduse nu coincid" });
+        }
+        else {
+            this.setState({ error: "" });
+        }
+    }
+    refresh() {
+        window.location.replace("/");
     }
 
     componentDidMount() {
-        var cats: any;
-        cats = '';
-        return fetch('http://localhost:6840/api/genre')
-            .then((response) => response.json())
-            .then(function (data) {
-                cats = data;
-            })
-            .then(() => {
-
-                this.setState({ genres: cats })
-                console.log(cats);
-            })
-            .catch(function (error) {
-                console.log('request failedddd', error)
-            })
+        GenreService.getAllGenres(this);
     }
 
     changeSelectedGenres(val: any) {
@@ -109,6 +112,7 @@ export class SignUpArtist extends React.Component<{}, { selectedGenres: any, gen
                         </div>
                         <br />
                         <button className="button-purple spacing" onClick={this.handleSubmit}>Înregistrare</button>
+                        {(this.state.error != '') ? (<div className="alert error-alert">Au aparut urmatoarele erori:<br />{this.state.error}</div>) : (<br />)}
                         <br /><br />
                     </form>
                 </div>

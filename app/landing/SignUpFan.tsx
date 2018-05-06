@@ -4,11 +4,17 @@ import { PreferenceQuiz } from 'landing/PreferenceQuiz';
 import { SignUpService } from 'services/SignUpService';
 import { SignUpUserObject } from 'objects/SignUpUserObject';
 
-export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email: string, name: string, password: string, passwordAgain: string }>
+export class SignUpFan extends React.Component<{}, {
+    isNextStep: boolean, email: string, name: string,
+    password: string, passwordAgain: string, error: string
+}>
 {
+    private pw: string;
+    private checkPw: string;
+
     constructor() {
         super();
-        this.state = { isNextStep: false, email: '', name: '', password: '', passwordAgain: '' };
+        this.state = { isNextStep: false, email: '', name: '', password: '', passwordAgain: '', error: '' };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -20,25 +26,33 @@ export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email:
 
     handleSubmit(event: any) {
         event.preventDefault();
-        var obj = new SignUpUserObject();
-        obj.email = this.state.email;
-        obj.name = this.state.name;
-        obj.password = this.state.password;
-        SignUpService.signUpFan(this, obj);
-        this.setState({ isNextStep: true });
+        if (this.pw == this.checkPw) {
+            var obj = new SignUpUserObject();
+            obj.email = this.state.email;
+            obj.name = this.state.name;
+            obj.password = this.state.password;
+            SignUpService.signUpFan(this, obj);
+        }
     }
 
     handleEmail(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ email: event.currentTarget.value });
     }
     handlePassword(event: React.FormEvent<HTMLInputElement>) {
+        this.pw = event.currentTarget.value;
         this.setState({ password: event.currentTarget.value });
     }
     handleName(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ name: event.currentTarget.value });
     }
     handlePasswordAgain(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ passwordAgain: event.currentTarget.value });
+        this.checkPw = event.currentTarget.value;
+        if (this.pw != this.checkPw) {
+            this.setState({ error: "Parolele introduse nu coincid" });
+        }
+        else {
+            this.setState({ error: "" });
+        }
     }
 
     render() {
@@ -80,6 +94,7 @@ export class SignUpFan extends React.Component<{}, { isNextStep: boolean, email:
                         <br />
 
                         <button className="button-purple spacing" onClick={this.handleSubmit}>Inregistrare</button>
+                        {(this.state.error != '') ? (<div className="alert error-alert">Au aparut urmatoarele erori:<br />{this.state.error}</div>) : (<br />)}
                         <br /><br />
                     </form>
                 </div>
