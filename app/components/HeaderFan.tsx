@@ -22,8 +22,8 @@ export class HeaderFan extends React.Component<{}, {}>
                     </div>
                     <ul className="nav navbar-nav">
                         <li><Link to='/' className=" header-button">Dashboard</Link></li>
-                        <li><Link to='/' className=" header-button">Descopera artisti</Link></li>
-                        <li><Link to='/' className=" header-button">Artisti preferati</Link></li>
+                        <li><Link to='/recommendations' className=" header-button">Descopera artisti</Link></li>
+                        <li><Link to='/my-ratings' className=" header-button">Evaluarile mele</Link></li>
                     </ul>
 
                     <ul className="nav navbar-nav navbar-right">

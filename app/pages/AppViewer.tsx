@@ -10,6 +10,8 @@ import { Statistics } from "pages/Statistics"
 import { FanPrivateProfile } from "pages/FanPrivateProfile"
 import { ArtistPrivateProfile } from "pages/ArtistPrivateProfile"
 import { AccessDenied } from "pages/AccessDenied"
+import { Recommendations } from "pages/Recommendations"
+import { MyRatings } from "pages/MyRatings"
 import { Loading } from "pages/Loading"
 import { withRouter } from 'react-router'
 import { TokenService } from 'services/TokenService';
@@ -51,6 +53,14 @@ export class AppViewer extends React.Component<{}, { isLoggedIn: any, token: any
                             : (<AccessDenied />)} />
                     <Route path='/signup-artist' component={SignUpArtist} />
                     <Route path='/login' component={LogIn} />
+                    <Route path='/recommendations'component={(props) =>
+                        (this.state.token.role == 0) ?
+                            (<Recommendations fanId={this.state.token.user_id} />)
+                            : (<AccessDenied />) } />
+                    <Route path='/my-ratings'component={(props) =>
+                        (this.state.token.role == 0) ?
+                            (<MyRatings fanId={this.state.token.user_id} />)
+                            : (<AccessDenied />) } />
                     <Route path='/artist/:id' render={(props) =>
                         (this.state.token.role == 0) ?
                             (<ArtistPublicProfile artistId={props.match.params.id} fanId={this.state.token.user_id} />)

@@ -88,6 +88,9 @@ export class RatingService {
             else {
                 throw ("rating failed");
             }
+        }) 
+        .catch(function (error) {
+                console.log('request failed', error);
         })
     }
 

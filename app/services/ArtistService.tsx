@@ -52,6 +52,31 @@ export class ArtistService {
 
     }
 
+    static getArtistsRatedByAFan(page: any, value:number) {
+        var artists: any;
+        artists = '';
+        return fetch(this.API+"?fanId="+value, { method: "GET", headers: this.headers })
+            .then(function (response) {
+                if (response.ok){
+                    return response.json();
+                } 
+                if (response.status == 404){
+                    //page.handleNotFoundMessage();
+                }
+                throw response;
+            })
+            .then(function (data) {
+                artists = data;
+            })
+            .then(() => {
+                page.setState({ artists: artists })
+            })
+            .catch(function (error) {
+                console.log('request failed', error)
+
+            })
+    }
+
 
     static getArtist(page: any, id: number) {
         var artist: any;
