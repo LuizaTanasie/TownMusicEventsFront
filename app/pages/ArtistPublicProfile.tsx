@@ -11,13 +11,15 @@ import "style/artist-profile.less"
 import { VisitService } from 'services/VisitService';
 import { VisitObject } from 'objects/VisitObject';
 
-export class ArtistPublicProfile extends React.Component<{ artistId: number, fanId: number }, { artist: any, 
-    genres: any, rating: any, hasClicked:boolean  }>
+export class ArtistPublicProfile extends React.Component<{ artistId: number, fanId: number }, {
+    artist: any,
+    genres: any, rating: any, hasClicked: boolean
+}>
 {
 
     constructor() {
         super();
-        this.state = { artist: '', genres: [], rating: {Score:-1}, hasClicked:false };
+        this.state = { artist: '', genres: [], rating: { Score: -1 }, hasClicked: false };
         this.ratingChanged = this.ratingChanged.bind(this);
         this.hasClickedALink = this.hasClickedALink.bind(this);
     }
@@ -25,22 +27,19 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
     componentDidMount() {
         ArtistService.getArtist(this, this.props.artistId);
         GenreService.getGenresForArtist(this, this.props.artistId);
+        RatingService.getRatingForAnArtist(this, this.props.artistId, this.props.fanId);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         var obj = new VisitObject();
         obj.artistid = this.props.artistId;
         obj.fanid = this.props.fanId;
         obj.hasClicked = this.state.hasClicked;
-        VisitService.addVisit(this,obj);
+        VisitService.addVisit(this, obj);
     }
 
     hasClickedALink(event: React.FormEvent<HTMLAnchorElement>) {
         this.setState({ hasClicked: true });
-    }
-
-    componentDidUpdate(){
-        RatingService.getRatingForAnArtist(this,this.props.artistId, this.props.fanId);
     }
 
     ratingChanged(val: any) {
@@ -48,7 +47,7 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
         ratingObject.artistid = this.props.artistId;
         ratingObject.fanid = this.props.fanId;
         ratingObject.rating = val;
-        this.setState({rating:val},()=>RatingService.addRating(this, ratingObject));
+        RatingService.addRating(this, ratingObject);
     }
 
     render() {
@@ -64,7 +63,9 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
                         <div>
                             <div className="button-sunt-fan">
                                 Acordă o notă:<br />
-                                <Rating onChange={this.ratingChanged} placeholderRating={this.state.rating.Score} />
+                                <Rating onChange={this.ratingChanged} placeholderRating={this.state.rating.Score}
+                                    placeholderSymbol={<div className="placeholder-rating"></div>}
+                                    fullSymbol={<div className="placeholder-rating"></div>}/>
                             </div>
                         </div>
                     </div>

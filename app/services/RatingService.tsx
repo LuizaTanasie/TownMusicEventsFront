@@ -74,7 +74,8 @@ export class RatingService {
 
 
     static addRating(page: any, obj: RatingObject) {
-
+        var rating: any;
+        rating = '';
         var request = new Request(this.API, {
             method: "POST",
             headers: this.headers,
@@ -88,10 +89,10 @@ export class RatingService {
             else {
                 throw ("rating failed");
             }
-        }) 
-        .catch(function (error) {
-                console.log('request failed', error);
         })
+            .catch(function (error) {
+                console.log('request failed', error);
+            })
     }
 
 }

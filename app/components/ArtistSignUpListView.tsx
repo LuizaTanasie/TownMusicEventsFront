@@ -22,7 +22,8 @@ export class ArtistSignUpListView extends React.Component<{ id:string, imgurl: s
                 </div>
                 <div className="col-md-7">
                     <div className=""><h4> {this.props.name}</h4> </div>
-                    <Rating onChange={this.ratingChanged}/>
+                    <Rating onChange={this.ratingChanged} placeholderSymbol={<div className="placeholder-rating"></div>}
+                                    fullSymbol={<div className="placeholder-rating"></div>}/>
                 </div>
             </div>
         );

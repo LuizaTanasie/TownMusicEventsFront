@@ -23,7 +23,7 @@ export class Recommendations extends React.Component<{ fanId: number }, { artist
         return (
             <div className="page-container">
                 <div className="dashboard-page-container">
-                    Acesti artisti iti sunt recomandati...
+                    <div className="subtitle spacing">Acesti artisti iti sunt recomandati...</div>
                     <StackGrid
                         columnWidth={"33.33%"} gutterWidth={0} gutterHeight={0}
                         monitorImagesLoaded={true}>
