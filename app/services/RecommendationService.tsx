@@ -24,6 +24,7 @@ static getRecommendations(page: any, fanId: number) {
                 artists = data;
             })
             .then(() => {
+                console.log(artists);
                 page.setState({ artists: artists })
             })
             .catch(function (error) {
