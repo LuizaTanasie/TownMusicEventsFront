@@ -16,7 +16,7 @@ static getRecommendations(page: any, fanId: number) {
                     return response.json();
                 } 
                 if (response.status == 404){
-                    //page.handleNotFoundMessage();
+                    page.handleNotFoundMessage();
                 }
                 throw response;
             })
