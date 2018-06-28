@@ -1,26 +1,32 @@
 import * as React from "react"
 import { GenreService } from 'services/GenreService';
+import { UserService } from 'services/UserService';
+import Select from "react-select"
 
 export class FanPrivateProfile extends React.Component<{ fanId: number }, {
-    fan: any, genres: any,
-    biography: string, name: string, pic1: string, oldPass: string, newPass: string
+    fan: any, genres: any, genresFan: any, success:boolean,
+    biography: string, name: string, pic1: string, oldPass: string, newPass: string, errorMsg:string
 }>
 {
     constructor() {
         super();
         this.state = {
-            fan: '', genres: [], biography: '',
-            name: '', pic1: '', oldPass: '', newPass: ''
+            fan: '', genres: [], biography: '',genresFan: [], success:false,
+            name: '', pic1: '', oldPass: '', newPass: '',errorMsg:''
         };
         this.handleSave = this.handleSave.bind(this);
         this.handleChangeBio = this.handleChangeBio.bind(this);
+        this.handleChangeGenres = this.handleChangeGenres.bind(this);
+        this.handleChangePass = this.handleChangePass.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handlePic1 = this.handlePic1.bind(this);
+        this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
     }
 
     componentDidMount() {
         // ArtistService.getArtist(this, this.props.artistId);
         GenreService.getGenresForFan(this, this.props.fanId);
+        GenreService.getAllGenres(this);
     }
 
     handleChangeBio(event: React.FormEvent<HTMLTextAreaElement>) {
@@ -46,43 +52,36 @@ export class FanPrivateProfile extends React.Component<{ fanId: number }, {
 
     handleChangePass(event: any) {
         event.preventDefault();
-        // ProfileService.changePassword(this);
+        UserService.changePassword(this,this.props.fanId,this.state.oldPass,this.state.newPass);
+    }
+
+    handleChangeGenres(event: any) {
+        event.preventDefault();
+        GenreService.addGenres(this,this.props.fanId, this.state.genresFan); 
+    }
+
+    changeSelectedGenres(val: any) {
+        console.log("Selected: " + JSON.stringify(val));
+        this.setState({ genresFan: val });
     }
 
     render() {
-        let genres = this.state.genres.map(function (object: any, i: any) {
-            return <span>{object.value} | </span>
-        })
-        let imageList = '';
         return (
             <div>
                 <div className="page-container">
                     <div className="container-regular">
-                        <div className="col col-xs-0 col-sm-6 col-md-6 col-lg-6 col-md-offset-1">
-                            <img className="img-responsive" src={this.state.fan.PictureUrl} />
-                        </div>
                         <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
                             <div className="input-entry-text-big">Nume: </div>
-                            <input type="text" name="artist-name" className="input-private-profile-big" placeholder={this.state.fan.Name} onChange={this.handleName} />
-
+                            <span className="input-private-profile-big"> sdfdsfdsfsdf {this.state.fan.Name} </span><br/>
+                            <div className="input-entry-text">Email: </div>
+                            <span className="input-private-profile"> sdfsdfsdf</span><br/><br/>
 
                             <button className="link-button" data-toggle="modal" data-target="#myModalPassword">Schimbă parola</button><br />
-                            <button className="link-button">Schimbă genurile muzicale</button>
+                            <button className="link-button"data-toggle="modal" data-target="#myModalGenres">Schimbă genurile muzicale</button>
+                        {(this.state.errorMsg != '') ? (<div className="alert error-alert">{this.state.errorMsg}</div>) : (<br />)}
+                        {(this.state.success) ? (<div className="alert success-alert">Modificarile au fost salvate cu success.</div>) : (<br />)}
                         </div>
-                        <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 spacing-top">
-                            <div className="input-entry-text">Url poza: </div>
-                            <input type="text" name="artist-picture1" className="input-private-profile-long" placeholder={this.state.fan.PictureUrl} onChange={this.handlePic1} /><br />
-                        </div>
-                        <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container-private">
-                            <div className="input-entry-text-black">Biografie: </div>
-                            <textarea placeholder={this.state.fan.About} name="descriere" className="form-control textarea " onChange={this.handleChangeBio} rows={9} />
-                        </div>
-                        <div className="col col-sm-1 col-md-1 col-lg-1"></div>
-                        <div className="row">
-                            <div className="col col-sm-2 col-md-2 col-lg-2 col-md-offset-1">
-                                <button className="button-purple" onClick={this.handleSave}>Salvează modificări</button>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div id="myModalPassword" className="modal fade" role="dialog">
@@ -109,6 +108,43 @@ export class FanPrivateProfile extends React.Component<{ fanId: number }, {
 
                     </div>
                 </div>
+
+                <div id="myModalGenres" className="modal fade" role="dialog">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                <h4 className="modal-title">Schimbati genurile muzicale favorite:</h4>
+                            </div>
+                            <div className="modal-body">
+                                <div className="spacing">
+                                <div className="spacing">
+                            Genuri muzicale:
+                            <Select
+                                name="form-field-genre"
+                                options={this.state.genres}
+                                multi={true}
+                                joinValues
+                                matchPos="start"
+                                ignoreCase={true}
+                                openOnFocus={true}
+                                placeholder="Selecteaza genuri"
+                                noResultsText="Nu exista rezultate"
+                                value={this.state.genresFan}
+                                onChange={this.changeSelectedGenres}
+                            />
+                            
+                        </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" onClick={this.handleChangeGenres} className="button-purple" data-dismiss="modal">Salvează</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div >
         );
     }

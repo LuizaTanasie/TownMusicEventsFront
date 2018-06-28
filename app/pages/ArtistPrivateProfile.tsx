@@ -5,19 +5,21 @@ import { ArtistService } from 'services/ArtistService';
 import { GenreService } from 'services/GenreService';
 import { ArtistProfileObject } from 'objects/ArtistProfileObject';
 import { Link } from 'react-router-dom';
+import Select from "react-select"
+import { UserService } from 'services/UserService';
 import "style/artist-profile.less"
 
 
 export class ArtistPrivateProfile extends React.Component<{ artistId: number }, {
-    artist: any, genres: any,
+    artist: any, genres: any, errorMsg: string, success: boolean,
     biography: string, name: string, fb: string, twitter: string, yt: string, insta: string, website: string,
-    pic1: string, spotify: string, sc: string, oldPass: string, newPass: string
+    pic1: string, spotify: string, sc: string, oldPass: string, newPass: string, genresArtist: any
 }>
 {
     constructor() {
         super();
         this.state = {
-            artist: '', genres: [], biography: '',
+            artist: '', genres: [], biography: '', genresArtist: [], errorMsg: '', success: false,
             name: '', fb: '', twitter: '', yt: '', insta: '', website: '', pic1: '', spotify: '', sc: '',
             oldPass: '', newPass: ''
         };
@@ -31,11 +33,15 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         this.handlePic1 = this.handlePic1.bind(this);
         this.handleSpotify = this.handleSpotify.bind(this);
         this.handleSoundCloud = this.handleSoundCloud.bind(this);
+        this.handleChangeGenres = this.handleChangeGenres.bind(this);
+        this.handleChangePass = this.handleChangePass.bind(this);
+        this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
     }
 
     componentDidMount() {
         ArtistService.getArtist(this, this.props.artistId);
         GenreService.getGenresForArtist(this, this.props.artistId);
+        GenreService.getAllGenres(this);
     }
 
     handleChangeBio(event: React.FormEvent<HTMLTextAreaElement>) {
@@ -73,6 +79,24 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
         this.setState({ pic1: event.currentTarget.value });
     }
 
+    handleChangeGenres(event: any) {
+        event.preventDefault();
+        GenreService.addGenres(this, this.props.artistId, this.state.genresArtist);
+    }
+
+    changeSelectedGenres(val: any) {
+        console.log("Selected: " + JSON.stringify(val));
+        this.setState({ genresArtist: val });
+    }
+
+    private handleOldPass = (ev: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ oldPass: ev.currentTarget.value });
+    }
+    private handleNewPass = (ev: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ newPass: ev.currentTarget.value });
+    }
+
+
     handleSave(event: any) {
         event.preventDefault();
         var artistProfileObject = new ArtistProfileObject();
@@ -90,16 +114,10 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
 
         var result = ArtistService.updateArtist(this, artistProfileObject);
     }
-    private handleOldPass = (ev: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ oldPass: ev.currentTarget.value });
-    }
-    private handleNewPass = (ev: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ newPass: ev.currentTarget.value });
-    }
 
     handleChangePass(event: any) {
         event.preventDefault();
-        // ProfileService.changePassword(this);
+        UserService.changePassword(this, this.props.artistId, this.state.oldPass, this.state.newPass);
     }
 
 
@@ -137,7 +155,9 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
                             <input type="text" name="artist-soundcloud" className="input-private-profile" placeholder={this.state.artist.SoundCloud} onChange={this.handleSoundCloud} />
 
                             <button className="link-button" data-toggle="modal" data-target="#myModalPassword">Schimbă parola</button><br />
-                            <button className="link-button">Schimbă genurile muzicale</button>
+                            <button className="link-button" data-toggle="modal" data-target="#myModalGenres">Schimbă genurile muzicale</button>
+                            {(this.state.errorMsg != '') ? (<div className="alert error-alert">{this.state.errorMsg}</div>) : (<br />)}
+                            {(this.state.success) ? (<div className="alert success-alert">Modificarile au fost salvate cu success.</div>) : (<br />)}
                         </div>
                         <div className="col col-sm-10 col-md-10 col-lg-10 col-md-offset-1 spacing-top">
                             <div className="input-entry-text">Url poza: </div>
@@ -173,12 +193,49 @@ export class ArtistPrivateProfile extends React.Component<{ artistId: number }, 
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" onClick={this.handleChangePass}  className="button-purple" data-dismiss="modal">Salvează</button>
+                                <button type="button" onClick={this.handleChangePass} className="button-purple" data-dismiss="modal">Salvează</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
+
+                <div id="myModalGenres" className="modal fade" role="dialog">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                <h4 className="modal-title">Schimbati genurile muzicale:</h4>
+                            </div>
+                            <div className="modal-body">
+                                <div className="spacing">
+                                    <div className="spacing">
+                                        Genuri muzicale:
+                            <Select
+                                            name="form-field-genre"
+                                            options={this.state.genres}
+                                            multi={true}
+                                            joinValues
+                                            matchPos="start"
+                                            ignoreCase={true}
+                                            openOnFocus={true}
+                                            placeholder="Selecteaza genuri"
+                                            noResultsText="Nu exista rezultate"
+                                            value={this.state.genresArtist}
+                                            onChange={this.changeSelectedGenres}
+                                        />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" onClick={this.handleChangeGenres} className="button-purple" data-dismiss="modal">Salvează</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         );
     }

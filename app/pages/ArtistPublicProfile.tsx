@@ -13,13 +13,13 @@ import { VisitObject } from 'objects/VisitObject';
 
 export class ArtistPublicProfile extends React.Component<{ artistId: number, fanId: number }, {
     artist: any,
-    genres: any, rating: any, hasClicked: boolean
+    genresArtist: any, rating: any, hasClicked: boolean
 }>
 {
 
     constructor() {
         super();
-        this.state = { artist: '', genres: [], rating: { Score: -1 }, hasClicked: false };
+        this.state = { artist: '', genresArtist: [], rating: { Score: -1 }, hasClicked: false };
         this.ratingChanged = this.ratingChanged.bind(this);
         this.hasClickedALink = this.hasClickedALink.bind(this);
     }
@@ -51,7 +51,7 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
     }
 
     render() {
-        let genres = this.state.genres.map(function (object: any, i: any) {
+        let genres = this.state.genresArtist.map(function (object: any, i: any) {
             return <span>{object.value} | </span>
         })
 
@@ -65,32 +65,39 @@ export class ArtistPublicProfile extends React.Component<{ artistId: number, fan
                                 Acordă o notă:<br />
                                 <Rating onChange={this.ratingChanged} placeholderRating={this.state.rating.Score}
                                     placeholderSymbol={<div className="placeholder-rating"></div>}
-                                    fullSymbol={<div className="placeholder-rating"></div>}/>
+                                    fullSymbol={<div className="placeholder-rating"></div>} />
                             </div>
                         </div>
                     </div>
                     <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
                         <div className="artist-name">{this.state.artist.Name}</div>
                         <div className="">| {genres} </div>
+                        <div className="spacing-top"><a className="link-button" href={this.state.artist.Website}>{this.state.artist.Website}</a> </div>
                         <div className="social-media-container">
-                            <a href={this.state.artist.Facebook} onClick={this.hasClickedALink} target="_blank">
-                                <img className="img-responsive social-media" src="/images/facebook.png" />
-                            </a>
-                            <a href={this.state.artist.Youtube} onClick={this.hasClickedALink} target="_blank">
-                                <img className=" img-responsive social-media" src="/images/youtube.png" />
-                            </a>
-                            <a href={this.state.artist.Instagram} onClick={this.hasClickedALink} target="_blank">
-                                <img className="img-responsive social-media" src="/images/instagram.png" />
-                            </a>
-                            <a href={this.state.artist.Twitter} onClick={this.hasClickedALink} target="_blank">
-                                <img className="img-responsive social-media" src="/images/twitter.png" />
-                            </a>
-                            <a href={this.state.artist.SoundCloud} onClick={this.hasClickedALink} target="_blank">
-                                <img className=" img-responsive social-media" src="/images/soundcloud.png" />
-                            </a>
-                            <a href={this.state.artist.Spotify} onClick={this.hasClickedALink} target="_blank">
-                                <img className="img-responsive social-media" src="/images/spotify.png" />
-                            </a>
+                            {(this.state.artist.Facebook!= null) ? (
+                                <a href={this.state.artist.Facebook} onClick={this.hasClickedALink} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/facebook.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.YouTube != null) ? (
+                                <a href={this.state.artist.YouTube} onClick={this.hasClickedALink} target="_blank">
+                                    <img className=" img-responsive social-media" src="/images/youtube.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.Instagram != null) ? (
+                                <a href={this.state.artist.Instagram} onClick={this.hasClickedALink} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/instagram.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.Twitter != null) ? (
+                                <a href={this.state.artist.Twitter} onClick={this.hasClickedALink} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/twitter.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.SoundCloud != null) ? (
+                                <a href={this.state.artist.SoundCloud} onClick={this.hasClickedALink} target="_blank">
+                                    <img className=" img-responsive social-media" src="/images/soundcloud.png" />
+                                </a>) :<span/>}
+                            {(this.state.artist.Spotify != null) ? (
+                                <a href={this.state.artist.Spotify} onClick={this.hasClickedALink} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/spotify.png" />
+                                </a>) : <span/>}
                         </div>
                     </div>
                     <div className="col col-xs-0 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container-public">

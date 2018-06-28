@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 import "style/artist-profile.less"
 
 
-export class ArtistPublicProfileNoRating extends React.Component<{ artistId: number}, { artist: any, genres: any}>
+export class ArtistPublicProfileNoRating extends React.Component<{ artistId: number }, { artist: any, genresArtist: any }>
 {
 
     constructor() {
         super();
-        this.state = { artist: '', genres: [] };
+        this.state = { artist: '', genresArtist: [] };
     }
 
     componentDidMount() {
@@ -21,7 +21,7 @@ export class ArtistPublicProfileNoRating extends React.Component<{ artistId: num
     }
 
     render() {
-        let genres = this.state.genres.map(function (object: any, i: any) {
+        let genres = this.state.genresArtist.map(function (object: any, i: any) {
             return <span>{object.value} | </span>
         })
 
@@ -34,25 +34,32 @@ export class ArtistPublicProfileNoRating extends React.Component<{ artistId: num
                     <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
                         <div className="artist-name">{this.state.artist.Name}</div>
                         <div className="">| {genres} </div>
+                        <div className="">{this.state.artist.Website} </div>
                         <div className="social-media-container">
-                            <a href={this.state.artist.Facebook} target="_blank">
-                                <img className="img-responsive social-media" src="/images/facebook.png" />
-                            </a>
-                            <a href={this.state.artist.Youtube} target="_blank">
-                                <img className=" img-responsive social-media" src="/images/youtube.png" />
-                            </a>
-                            <a href={this.state.artist.Instagram} target="_blank">
-                                <img className="img-responsive social-media" src="/images/instagram.png" />
-                            </a>
-                            <a href={this.state.artist.Twitter} target="_blank">
-                                <img className="img-responsive social-media" src="/images/twitter.png" />
-                            </a>
-                            <a href={this.state.artist.SoundCloud} target="_blank">
-                                <img className=" img-responsive social-media" src="/images/soundcloud.png" />
-                            </a>
-                            <a href={this.state.artist.Spotify} target="_blank">
-                                <img className="img-responsive social-media" src="/images/spotify.png" />
-                            </a>
+                            {(this.state.artist.Facebook != null) ? (
+                                <a href={this.state.artist.Facebook} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/facebook.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.YouTube != null) ? (
+                                <a href={this.state.artist.YouTube} target="_blank">
+                                    <img className=" img-responsive social-media" src="/images/youtube.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.Instagram != null) ? (
+                                <a href={this.state.artist.Instagram} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/instagram.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.Twitter != null) ? (
+                                <a href={this.state.artist.Twitter} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/twitter.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.SoundCloud != null) ? (
+                                <a href={this.state.artist.SoundCloud} target="_blank">
+                                    <img className=" img-responsive social-media" src="/images/soundcloud.png" />
+                                </a>) : <span/>}
+                            {(this.state.artist.Spotify != null) ? (
+                                <a href={this.state.artist.Spotify} target="_blank">
+                                    <img className="img-responsive social-media" src="/images/spotify.png" />
+                                </a>) : <span/>}
                         </div>
                     </div>
                     <div className="col col-xs-0 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 biography-container-public">
