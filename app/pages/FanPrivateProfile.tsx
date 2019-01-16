@@ -4,14 +4,14 @@ import { UserService } from 'services/UserService';
 import Select from "react-select"
 
 export class FanPrivateProfile extends React.Component<{ fanId: number }, {
-    fan: any, genres: any, genresFan: any, success:boolean,
+    user: any, genres: any, genresFan: any, success:boolean,
     biography: string, name: string, pic1: string, oldPass: string, newPass: string, errorMsg:string
 }>
 {
     constructor() {
         super();
         this.state = {
-            fan: '', genres: [], biography: '',genresFan: [], success:false,
+            user: '', genres: [], biography: '',genresFan: [], success:false,
             name: '', pic1: '', oldPass: '', newPass: '',errorMsg:''
         };
         this.handleSave = this.handleSave.bind(this);
@@ -24,7 +24,7 @@ export class FanPrivateProfile extends React.Component<{ fanId: number }, {
     }
 
     componentDidMount() {
-        // ArtistService.getArtist(this, this.props.artistId);
+        UserService.getUser(this, this.props.fanId);
         GenreService.getGenresForFan(this, this.props.fanId);
         GenreService.getAllGenres(this);
     }
@@ -72,9 +72,9 @@ export class FanPrivateProfile extends React.Component<{ fanId: number }, {
                     <div className="container-regular">
                         <div className="col col-xs-0 col-sm-4 col-md-4 col-lg-4 ">
                             <div className="input-entry-text-big">Nume: </div>
-                            <span className="input-private-profile-big"> sdfdsfdsfsdf {this.state.fan.Name} </span><br/>
+                            <span className="input-private-profile-big"> {this.state.user.Name} </span><br/>
                             <div className="input-entry-text">Email: </div>
-                            <span className="input-private-profile"> sdfsdfsdf</span><br/><br/>
+                            <span className="input-private-profile">{this.state.user.Email} </span><br/><br/>
 
                             <button className="link-button" data-toggle="modal" data-target="#myModalPassword">Schimbă parola</button><br />
                             <button className="link-button"data-toggle="modal" data-target="#myModalGenres">Schimbă genurile muzicale</button>

@@ -4,21 +4,21 @@ import { ArtistListViewRecommendation } from 'components/ArtistListViewRecommend
 import { RecommendationService } from 'services/RecommendationService';
 import "style/all-artists-page.less"
 
-export class Recommendations extends React.Component<{ fanId: number }, { artists: any, notFound:string }>
+export class Recommendations extends React.Component<{ fanId: number }, { artists: any, notFound: string, loaded: boolean }>
 {
 
     constructor() {
         super();
-        this.state = { artists: [], notFound:''};
+        this.state = { artists: [], notFound: '', loaded: false };
         this.handleNotFoundMessage = this.handleNotFoundMessage.bind(this);
     }
 
     componentDidMount() {
-        RecommendationService.getRecommendations(this,this.props.fanId );
+        RecommendationService.getRecommendations(this, this.props.fanId);
     }
 
-    handleNotFoundMessage(){
-        this.setState({notFound:"Ne pare rau :( Nu avem suficiente date sa iti furnizam recomandari potrivite."})
+    handleNotFoundMessage() {
+        this.setState({ notFound: "Ne pare rau :( Nu avem suficiente date sa iti furnizam recomandari potrivite." })
     }
 
     render() {
@@ -28,7 +28,9 @@ export class Recommendations extends React.Component<{ fanId: number }, { artist
         return (
             <div className="page-container">
                 <div className="dashboard-page-container">
-                    <div className="subtitle spacing">Acesti artisti iti sunt recomandati...</div>
+                    {(this.state.loaded == false) ? (<div className='margin-left:300px;'>
+                        <img className="" src="images/spinner.gif" /></div>) :
+                        (<div className="subtitle spacing">Acesti artisti iti sunt recomandati...</div>)}
                     <StackGrid
                         columnWidth={"33.33%"} gutterWidth={0} gutterHeight={0}
                         monitorImagesLoaded={true}>

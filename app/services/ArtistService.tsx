@@ -94,7 +94,6 @@ export class ArtistService {
                 console.log('request failed', error)
 
             })
-
     }
 
     static updateArtist(profile: any, obj: ArtistProfileObject) {

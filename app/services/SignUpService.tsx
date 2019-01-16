@@ -74,10 +74,14 @@ export class SignUpService {
 
         let response = fetch(request).then(function (response) {
             if (response.ok) {
-                return response.json();
+                return response.json()
+                .then(()=>page.changeRoute())
             }
-            else {
-                throw ("signup failed");
+           else {
+                return response.json()
+                    .then(function (error) {
+                        page.setState({ error: error.Message })
+                    });
             }
         })
             .catch(function (error) {

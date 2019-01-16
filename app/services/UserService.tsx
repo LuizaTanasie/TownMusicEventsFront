@@ -30,4 +30,22 @@ static changePassword(page: any, id:any, oldpass:string, newpass:string) {
             })
     }
 
+    static getUser(page: any, id: number) {
+        var user: any;
+        user = '';
+        return fetch(this.API + id, { method: "GET", headers: this.headers })
+            .then((response) => response.json())
+            .then(function (data) {
+                user = data;
+            })
+            .then(() => {
+                page.setState({ user: user })
+                console.log(user);
+            })
+            .catch(function (error) {
+                console.log('request failed', error)
+
+            })
+    }
+
 }

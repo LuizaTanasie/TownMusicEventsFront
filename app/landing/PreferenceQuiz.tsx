@@ -8,11 +8,13 @@ import 'react-select/dist/react-select.css';
 import { SignUpService } from 'services/SignUpService';
 import { Link } from 'react-router-dom';
 
-export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedGenres: any, topArtistsRomania: any, topRomanianArtists: any }>
+export class PreferenceQuiz extends React.Component<{}, {
+    genres: any, selectedGenres: any, topArtistsRomania: any, topRomanianArtists: any, error: string, successfulQuiz: boolean
+}>
 {
     constructor() {
         super();
-        this.state = { genres: [], selectedGenres: [], topArtistsRomania: [], topRomanianArtists: [] }
+        this.state = { genres: [], selectedGenres: [], topArtistsRomania: [], topRomanianArtists: [], error: '', successfulQuiz: false }
         this.changeSelectedGenres = this.changeSelectedGenres.bind(this);
         this.giveRating = this.giveRating.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,11 +31,15 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
     }
 
     handleSubmit(event: any) {
+        event.preventDefault();
         SignUpService.postQuizAnswers(this, this.ratings, this.state.selectedGenres);
     }
 
-    componentDidMount() {
+    changeRoute() {
+        this.setState({ successfulQuiz: true });
+    }
 
+    componentDidMount() {
         GenreService.getAllGenres(this);
         LastFMService.getTopRomania(this);
         LastFMService.getTopRomanian(this);
@@ -41,6 +47,9 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
 
     render() {
         const listItems = this.state.topArtistsRomania.map((artist: any) => <li>{artist.name}</li>)
+        if (this.state.successfulQuiz == true) {
+            window.location.replace("/success");
+        }
         return (
             <div>
                 Pentru a-ti putea recomanda cei mai potriviti artisti muzicali,<br />
@@ -90,8 +99,10 @@ export class PreferenceQuiz extends React.Component<{}, { genres: any, selectedG
 
                         )
                     } />
+                    {(this.state.error != '') ? (<div className="alert error-alert">Au aparut urmatoarele erori:<br />{this.state.error}</div>) : (<br />)}
                     <div className="float-right">
-                        <Link to="/" className="button-purple" onClick={this.handleSubmit}>Trimite</Link>
+                        <button className="button-purple" onClick={this.handleSubmit}>Trimite</button>
+
                     </div>
                 </div>
             </div>
